@@ -1,0 +1,60 @@
+
+int maxl1,maxl2,minr1,minr2; //最大的l和最小的r
+int maxlid,minrid; //最大的l和最小的r的id
+PII a[N];
+//区间交就是最大的l减去最小的r,每个区间都是这样，如此
+//如果我们最大的l被删了，那么我们就可以轮流到次大的
+//(选其他位置因为有次大的l保证，不可能重合)
+//如果最小的r被删了，那么我们同理
+//可以根据数据理解：(3)
+// 7
+// 1 14
+// 2 13
+// 3 12
+// 4 11
+// 5 10
+// 6 9
+// 7 8
+
+
+int main(){
+    int n; cin >> n;
+    minr1 = 1e9,minr2 = 1e9;
+    maxlid = -1,minrid = -1;
+    for(int i = 1;i <= n;i++){
+        int l,r;
+        cin >> l >> r;
+        a[i] = {l,r};
+        if(l > maxl1){
+            maxl2 = maxl1; //次大继承最大
+            maxl1 = l; //最大变成更大
+            maxlid = i;
+        }else if(l > maxl2){
+            maxl2 = l;
+        }
+        if(r < minr1){
+            minr2 = minr1;
+            minr1 = r;
+            minrid = i;
+        }else if(r < minr2){
+            minr2 = r;
+        }
+    }
+    //遍历所有要删除的可能性
+    int ans = 0;
+    for(int i = 1;i <= n;i++){
+        int l,r;
+        if(i == maxlid){ //如果最大的删除了
+            l = maxl2;
+        }else{
+            l = maxl1;
+        }
+        if(i == minrid){
+            r = minr2;
+        }else{
+            r = minr1;
+        }
+        ans = max(ans,r - l);
+    }
+    cout << ans << endl;
+}
