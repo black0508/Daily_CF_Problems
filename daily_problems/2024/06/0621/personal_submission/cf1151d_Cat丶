@@ -1,0 +1,36 @@
+#include <iostream>
+#include <map>
+#include <set>
+#include <cstring>
+#include <queue>
+#include <vector>
+#include <bitset>
+#include <iomanip>
+#include <stack>
+#include <algorithm>
+#include <cmath>
+using namespace std;
+typedef long long ll;
+typedef pair<int,int> PII;
+const int N = 100010;
+int n,m;
+ll suma;
+ll sumb;
+ll s[N];
+
+int main(){
+    cin >> n;
+    for(int i = 1;i <= n;i++){
+        int a,b;
+        cin >> a >> b;
+        s[i] = a - b;
+        suma += a;
+        sumb += b;
+    }
+    sort(s + 1,s + 1 + n);
+    ll ans = sumb * n - suma;
+    for(int i = n;i >= 1;i--){
+        ans += (ll)(n - i + 1) * s[i];
+    }
+    cout << ans;
+}
